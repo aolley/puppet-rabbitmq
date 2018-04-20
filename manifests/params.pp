@@ -125,6 +125,10 @@ class rabbitmq::params {
   $stomp_ensure                        = false
   $stomp_port                          = 6163
   $stomp_ssl_only                      = false
+  $stomp_default_user                  = undef
+  $stomp_default_pass                  = undef
+  $stomp_default_vhost                 = undef
+  $stomp_implicit_connect              = false
   $ldap_auth                           = false
   $ldap_server                         = 'ldap'
   $ldap_user_dn_pattern                = undef

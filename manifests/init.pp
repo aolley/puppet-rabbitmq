@@ -175,6 +175,12 @@
 # @param stomp_port The port to use for Stomp.
 # @param stomp_ssl_only Configures STOMP to only use SSL.  No cleartext STOMP TCP listeners will be created. Requires setting
 #  ssl_stomp_port also.
+# @param stomp_default_user Configures STOMP to default to this user if one isn't provided on CONNECT. Requires setting stomp_default_pass
+#  also.
+# @param stomp_default_pass The passcode for the user specified in stomp_default_user.
+# @param stomp_default_vhost Configures STOMP to use this as this vhost if one isn't provided on CONNECT.
+# @param stomp_implicit_connect In this mode, if the first frame sent on a session is not a CONNECT, the client is automatically connected
+#  as the default user or the user supplied in the SSL certificate.
 # @param stomp_ensure Enable to install the stomp plugin.
 # @param tcp_backlog The size of the backlog on TCP connections.
 # @param tcp_keepalive Enable TCP connection keepalive for RabbitMQ service.
@@ -261,6 +267,10 @@ class rabbitmq(
   Hash $ldap_config_variables                                      = $rabbitmq::params::ldap_config_variables,
   Integer[1, 65535] $stomp_port                                    = $rabbitmq::params::stomp_port,
   Boolean $stomp_ssl_only                                          = $rabbitmq::params::stomp_ssl_only,
+  Optional[String] $stomp_default_user                             = $rabbitmq::params::stomp_default_user,
+  Optional[String] $stomp_default_pass                             = $rabbitmq::params::stomp_default_pass,
+  Optional[String] $stomp_default_vhost                            = $rabbitmq::params::stomp_default_vhost,
+  Boolean $stomp_implicit_connect                                  = $rabbitmq::params::stomp_implicit_connect,
   Boolean $wipe_db_on_cookie_change                                = $rabbitmq::params::wipe_db_on_cookie_change,
   String $cluster_partition_handling                               = $rabbitmq::params::cluster_partition_handling,
   Variant[Integer[-1,], Enum['unlimited', 'infinity']] $file_limit = $rabbitmq::params::file_limit,
@@ -286,6 +296,10 @@ class rabbitmq(
 
   if $config_stomp and $stomp_ssl_only and ! $ssl_stomp_port  {
     fail('$stomp_ssl_only requires that $ssl_stomp_port be set')
+  }
+
+  if $config_stomp and $stomp_default_user and ! $stomp_default_pass {
+    fail('$stomp_default_user requires that $stomp_default_pass be set')
   }
 
   if $ssl_versions {

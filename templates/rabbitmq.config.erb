@@ -147,6 +147,19 @@
     ,
     {ssl_listeners, [<%= @ssl_stomp_port %>]}
   <%- end -%>
+  <%- if @stomp_default_user && @stomp_default_pass -%>
+    ,
+    {default_user, [{login, "<%= @stomp_default_user %>"},
+                    {passcode, "<%= @stomp_default_pass %>"}]}
+  <%- end -%>
+  <%- if @stomp_default_vhost -%>
+    ,
+    {default_vhost, <<"<%= @stomp_default_vhost %>">>}
+  <%- end -%>
+  <%- if @stomp_implicit_connect -%>
+    ,
+    {implicit_connect, true}
+  <%- end -%>
   ]}
 <% end -%>
 <%- if @ldap_auth -%>,

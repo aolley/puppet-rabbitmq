@@ -56,6 +56,10 @@ class rabbitmq::config {
   $ssl_ciphers                         = $rabbitmq::ssl_ciphers
   $stomp_port                          = $rabbitmq::stomp_port
   $stomp_ssl_only                      = $rabbitmq::stomp_ssl_only
+  $stomp_default_user                  = $rabbitmq::stomp_default_user
+  $stomp_default_pass                  = $rabbitmq::stomp_default_pass
+  $stomp_default_vhost                 = $rabbitmq::stomp_default_vhost
+  $stomp_implicit_connect              = $rabbitmq::stomp_implicit_connect
   $ldap_auth                           = $rabbitmq::ldap_auth
   $ldap_server                         = $rabbitmq::ldap_server
   $ldap_user_dn_pattern                = $rabbitmq::ldap_user_dn_pattern
